@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="referrer" content="never">
+    <title>星云筹-求助详情</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+
+    <script src=js/nebPay.js></script>
+    <script type="text/javascript" src="js/nebulas.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body style="margin: 0px;background: #f8f8f8;">
+
+<div class="top"><img src="images/top.jpg"></div>
+
+<!--主内容 S-->
+<div class="er_main">
+    <!--路径 S-->
+    <div class="row" id="app">
+        <!--详情页 S-->
+        <div class="new_xingqing">
+
+            <h3 v-html="donate_bean.title"></h3>
+            <div class="new_xq_sm">发布人：{{donate_bean.realname}} {{donate_bean.from}}
+                <br/>目标金额：<span>{{donate_bean.price}} </span>Nas | 已获得<span> {{ donate_bean.buyers.length }}  </span>人赞助
+                | 发表时间：<span>{{ donate_bean.ts | formatDate }} </span></div>
+            <!--<img src="images/1.jpg"/>-->
+
+            <p>{{donate_bean.content}}</p>
+            <!--<p>常务副县长于国祥，县委常委、松江河镇党委书记刘仁峰，副县长刘守均，县政协副主席、财政局局长李国刚，各牵头单位及相关单位和乡镇负责人参加会议。</p>-->
+            <!--<p>会上，就抚松中央环境保护督察信访举报案件和反馈意见重难点环境问题整改销号工作推进情况，各牵头部门分别进行了汇报。</p>-->
+            <!--<p>-->
+            <!--王海瑛强调，下一步就中央环境保护督察信访举报案件和反馈意见重难点环境问题整改销号工作要抓紧落实，严格按照会议要求贯彻执行，要本着只争朝夕的精神，争取将各项工作提前完成，要有具体整改措施、有整改目标、有工作进展，认真细致的完善好各项材料，县督察局要建立完善的督查机制，对各牵头部门和相关单位工作进展情况进行长期督查。对整改工作落实不到位，进度明显滞后的，予以通报、约谈，扎实推进督察整改任务落实。各单位、各部门要高度重视，认真整改，按照各时间节点要求，完成好各项整改工作。</p>-->
+
+            <!--<div class="fanye">-->
+            <!--<span class="syp">上一篇：没有了</span>-->
+            <!--<span class="xyp">下一篇：<a href="xqy2.html">省政协主席江泽林深入新屯子镇南岗村实地调研扶贫工作</a></span>-->
+            <!--</div>-->
+
+        </div>
+        <!--详情页 E-->
+        <div class="zzlb">
+            <button class="btn btn-lg" style="float: right; margin-right: 35px; background: #e71209;color: #fff;"
+                    onclick="showCreateModel();"
+                    href="javascript:void(0);"> 我要赞助
+            </button>
+            <ul>
+
+                <li v-for="buyer in donate_bean.buyers">捐助人姓名：<span>{{buyer.realname}}
+                </span> 捐助人地址：<span>{{buyer.from}}</span>
+                    捐助时间：<span>{{buyer.ts | formatDate}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--主内容 E-->
+
+<!--footer s-->
+<div class="aw-footer-wrap">
+    <div class="aw-footer">
+        <span class="hidden-xs">Copyright © 2018</span>
+        <span>&nbsp;|&nbsp;</span>
+        <span class="hidden-xs"><a href="http://donate.inicb.com/">基于NAS的慈善捐助平台"星云筹"</a></span>
+        <p>联系方式：nbeyond1983@gmail.com</p>
+    </div>
+</div>
+<!--footer s-->
+
+
+<!-- 创建求助 模态框（Modal） -->
+<div class="modal fade" id="donate_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    我要捐助
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p>感谢您的参与。</p>
+                <div id="photo_error" class="alert alert-danger hide error_message">
+                    <i id="photo_error_msg" class="icon icon-delete"></i>
+                    <em></em>
+                </div>
+                <form action="" method="post"
+                      id="quick_publish"><!--onsubmit="return false"-->
+                    <div><textarea maxlength="50" class="form-control" placeholder="请输入捐助者姓名" rows="1"
+                                   name="question_content" id="donate_username"
+                                   onkeydown="if (event.keyCode == 13) { return false; }"></textarea>
+                    </div>
+                    <div><textarea maxlength="50" onkeyup="textarea();" class="form-control"
+                                   placeholder="目标金额（单位：nas）" rows="1" name="question_content" id="donate_price"
+                                   onkeydown="if (event.keyCode == 13) { return false; }"></textarea></div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                </button>
+                <button type="button" class="btn btn-primary" onclick="donate();">
+                    确定
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+<script>
+
+    var donate_bean_copy;
+
+    var wei = 1000000000000000000;
+
+    //测试合约地址
+    // var dappContactAddress = "n1v1N4xecSzyTaHSncTaDHiCUwhKFLdxML2";
+    //正式合约地址
+    var dappContactAddress = "n1eM1c7kBWHHuSiWbAdY3otfQRY7yZYTxRz";
+    var nebulas = require("nebulas"), Account = Account, neb = new nebulas.Neb();
+    // neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"))
+    neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"))
+    var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    var nebPay = new NebPay();
+
+    /**
+     * 获取url参数值
+     * @param variable
+     * @returns {*}
+     */
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (false);
+    }
+
+
+    /**
+     * 显示创建求助界面
+     * @returns {boolean}
+     */
+    function showCreateModel() {
+
+
+        if (typeof(webExtensionWallet) === "undefined") {
+            alert('对不起，请先安装星云钱包插件！');
+            $('#photo_warning').show();
+            return;
+        } else {
+            // AWS.dialog('publish', {'category_enable': '1', 'category_id': '0', 'topic_title': ''});
+            // data-toggle="modal" data-target="#myModal"
+            $('#donate_modal').modal('show')
+            return false;
+        }
+    }
+
+    function getDonateDetails() {
+        var callArgs = '[' + getQueryVariable("id") + ']';
+
+        var from = dappContactAddress
+        var to = dappContactAddress
+        var value = "0";
+        var nonce = "0"
+        var gas_price = "1000000"
+        var gas_limit = "2000000"
+        var callFunction = "getDonatesDetail";
+        // var callArgs = "[\"" + search_value + "\"]";
+        console.log(callArgs);
+        var contract = {
+            "function": callFunction,
+            "args": callArgs
+        }
+        neb.api.call(from, to, value, nonce, gas_price, gas_limit, contract)
+            .then(function (resp) {
+                // alert(JSON.stringify(resp))
+                var result = resp.result
+                if (result === 'null') {
+                    layer.alert('没有查到相关求助信息');
+                } else {
+                    layer.close(layerIndex)
+                    var resultObj = JSON.parse(result);
+                    donate_bean_copy = resultObj;
+                    Vue.set(app, 'donate_bean', resultObj)
+                }
+            })
+
+    }
+
+    function donate() {
+        var id = getQueryVariable("id");
+        var donate_username = $('#donate_username').val();
+        console.log('title:' + donate_username);
+        var price = $('#donate_price').val();
+        console.log('price:' + price);
+        if (donate_username == '') {
+            $('#photo_error_msg').text('请先输入捐助者姓名！');
+            $('#photo_error').removeClass('hide');
+            return;
+        }
+        if (price == '') {
+            $('#photo_error_msg').text('请先输入捐助金额（以Nas为单位）！');
+            $('#photo_error').removeClass('hide');
+            return;
+        }
+        // price = parseInt(price) / 1000000000000000000
+        var r = confirm('您将捐助' + price + "nas给地址为 " + donate_bean_copy.from + " 的用户 " + donate_bean_copy.realname)
+        if (r == false) {
+            return;
+        }
+        price = parseFloat(price);
+
+        console.log('id:' + id + ', price:' + price);
+        var to = dappContactAddress;
+        var value = price;
+        console.log(value);
+        var callFunction = "donate"
+        var callArgs = [];
+        callArgs.push(id);
+        callArgs.push(donate_username);
+        nebPay.call(to, value, callFunction, JSON.stringify(callArgs), {
+            listener: function (resp) {
+                console.log("response of push: " + JSON.stringify(resp));
+                if (resp == 'Error: Transaction rejected by user') {
+                    alert('交易已取消！');
+                    return;
+                }
+                alert('交易已提交，预计10~15秒内完成交易，请耐心等待！')
+                $('#donate_modal').modal('hide');
+                var hash = resp.txhash;
+                regetTransactionReceipt(hash, function (status) {
+                    if (status == 1) {
+                        alert('交易已完成，请刷新页面查看最新内容！');
+                        location.reload();
+                    } else {
+                        alert('交易失败！');
+                    }
+                })
+            }
+        });
+    }
+
+
+    function regetTransactionReceipt(hash, cb) {
+        var task = setInterval(function () {
+            getTransactionReceipt(hash, function (resp) {
+//                console.log(resp)
+//                 alert(resp.status)
+//                 alert(resp.result.result)
+                var status = resp.status;
+                console.log('status:' + status)
+                if (status == 1 || status == 0) {
+                    clearInterval(task);
+                    cb(status);
+                }
+            })
+        }, 10000);
+    }
+
+
+    function   getTransactionReceipt(hash, cb) {
+        //查询交易结果
+        neb.api.getTransactionReceipt({hash: hash})
+            .then(function (resp) {
+                console.log(resp);
+                cb(resp)
+
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
+
+    Date.prototype.format = function (format) {
+        var args = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+            "S": this.getMilliseconds()
+        };
+        if (/(y+)/.test(format))
+            format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var i in args) {
+            var n = args[i];
+            if (new RegExp("(" + i + ")").test(format))
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+        }
+        return format;
+    };
+
+    // 注册
+    Vue.filter('formatDate', function (time) {
+        // 返回处理后的值
+        var data = new Date(time);
+        return data.format('yyyy-MM-dd')
+        // return formatDate(data,'yyyy-MM-dd');
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            donate_bean: null
+        }
+    });
+
+    window.onload = function () {
+
+        layerIndex = layer.load(1, {
+            shade: [0.4, '#000'] //0.1透明度的白色背景
+        });
+        //获取钱包信息
+
+        getDonateDetails();
+    }
+</script>
+
+</body>
+</html>

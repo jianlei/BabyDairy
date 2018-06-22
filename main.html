@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html class="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="referrer" content="never">
+    <title>Baby日记</title>
+
+    <link rel="stylesheet" type="text/css" href="./static/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="./static/icon.css">
+    <link href="./static/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./static/common.css" rel="stylesheet" type="text/css">
+    <link href="./static/link.css" rel="stylesheet" type="text/css">
+    <link href="./static/style.css" rel="stylesheet" type="text/css">
+    <link href="./static/viewer.min.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+        var _13CB8A9D0122F2B4F5CBDF8BDDDD0658 = "";
+        var G_POST_HASH = _13CB8A9D0122F2B4F5CBDF8BDDDD0658;
+        var G_INDEX_SCRIPT = "";
+        var G_SITE_NAME = "";
+        var G_BASE_URL = "";
+        var G_STATIC_URL = "";
+        var G_UPLOAD_URL = "";
+        var G_USER_ID = "";
+        var G_USER_NAME = "";
+        var G_UPLOAD_ENABLE = "N";
+        var G_UNREAD_NOTIFICATION = 0;
+        var G_NOTIFICATION_INTERVAL = 100000;
+        var G_CAN_CREATE_TOPIC = "";
+        var G_ADVANCED_EDITOR_ENABLE = "Y";
+
+    </script>
+
+    <script type="text/javascript" src="static/nebulas.js"></script>
+
+    <script src="./static/jquery.2.js" type="text/javascript"></script>
+    <script src="./static/jquery.form.js" type="text/javascript"></script>
+    <script src="./static/plug-in_module.js" type="text/javascript"></script>
+    <script src="./static/aws.js" type="text/javascript"></script>
+    <script src="./static/aw_template.js" type="text/javascript"></script>
+    <script src="./static/app.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./static/compatibility.js"></script>
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="js/respond.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="./static/nebPay.js"></script>
+
+    <style>
+
+        .zhuan {
+            width: 100%;
+            height: auto;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+        }
+    </style>
+    <style type="text/css"></style>
+    <style type="text/css">.fancybox-margin {
+        margin-right: 0px;
+    }</style>
+</head>
+<body class="" style="">
+<noscript unselectable="on" id="noscript">
+    <div class="aw-404 aw-404-wrap container">
+        <img src="#">
+        <p>你的浏览器禁用了JavaScript, 请开启后刷新浏览器获得更好的体验!</p>
+    </div>
+</noscript>
+
+<div class="aw-top-menu-wrap">
+
+    <div class="container">
+        <div class="aw-logo hidden-xs" style="width: 40px">
+            <img src="images/logo1.png" style="width: 40px;height: 40px"/>
+        </div>
+        <!-- 导航 -->
+        <div class="aw-top-nav navbar">
+            <div class="navbar-header">
+                <button class="navbar-toggle pull-left">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html" >首页</a></li>
+                    <li><a href="main.html" class="active">宝贝之家</a></li>
+                    <!--<li><a href="help.html">使用说明</a></li>-->
+                </ul>
+            </nav>
+        </div>
+
+
+    </div>
+</div>
+
+<div id="photo_warning" class="container" style="margin-top: 10px;padding-bottom: 0px; display: none">
+    <div class="alert alert-error alert-dismissible" role="alert" style="color: red;">
+        <button type="button" onclick="$('#photo_warning').hide();" class="close"><span
+                style="margin-left: -50px;">×</span></button>
+        <strong>⚠️警告：</strong > 您尚未安装星云钱包插件(WebExtensionWallet)，<a target="_blank"
+                                                                     href="https://github.com/ChengOrangeJu/WebExtensionWallet"
+                                                                     class="alert-link">点我</a>前往安装...
+    </div>
+</div>
+
+<div class="aw-container-wrap" style="margin-top: 10px">
+    <div class="container" >
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-12 aw-main-content">
+
+                    <!-- tab切换 -->
+                    <ul class="nav nav-tabs aw-nav-tabs active hidden-xs">
+
+                        <li id="photo_hot" class="active"><a onclick="photoHot();" href="javascript:void(0);">头条日记</a>
+                        </li>
+                        <li id="photo_new"><a href="javascript:void(0);" onclick="photoNew();">最新日记</a></li>
+                        <li id="photo_my"><a href="javascript:void(0);" onclick="my();">我的日记</a></li>
+                        <div class="aw-publish-btn">
+                            <a id="header_publish" href="javascript:void(0);" class="btn-primary" onclick="post_click();"><i
+                                    class="icon icon-ask"></i>写日记</a>
+                        </div>
+
+                        <div class="aw-user-nav" >
+                            <i id="user_welcome" style="margin-top: 10px;"> </i>
+                        </div>
+
+                        <!--<div class="aw-user-nav">-->
+                            <!--&lt;!&ndash; 登陆&注册栏 &ndash;&gt;-->
+                            <!--<a href="https://duanyugit.github.io/interview/index.html#" class="aw-user-nav-dropdown">-->
+                                <!--<img style="visibility: visible;" id="photo_avatar" src="./avatar/1.png" title="收入：0-->
+<!--消费：0-->
+<!--分享：0-->
+<!--好评：0-->
+<!--差评：0">-->
+                            <!--</a>-->
+                        <!--</div>-->
+
+                    </ul>
+                    <!-- end tab切换 -->
+
+
+                    <div class="aw-mod aw-explore-list">
+                        <div class="mod-body">
+                            <div id="photo_list" class="aw-common-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="aw-footer-wrap">
+    <div class="aw-footer">
+        <span class="hidden-xs">Copyright © 2018</span>
+        <span>&nbsp;|&nbsp;</span>
+        <span class="hidden-xs"><a href="http://donate.inicb.com/">基于NAS的区块链日记平台"Baby日记"</a></span>
+        <p>联系方式：wangbh2018@gmail.com</p>
+    </div>
+</div>
+
+<a class="aw-back-top hidden-xs" href="javascript:;" onclick="$.scrollTo(1, 600, {queue:true});"><i
+        class="icon icon-up"></i></a>
+<!-- DO NOT REMOVE -->
+<div id="aw-ajax-box" class="aw-ajax-box">
+    <div class="modal fade alert-box aw-publish-box" id="photo_modal" style="display: none;">
+        <div class="modal-dialog" id="photo_dialog">
+            <div class="modal-content">
+                <div class="modal-header"><a type="button" class="close icon icon-delete" data-dismiss="modal"
+                                             aria-hidden="true"></a>
+                    <h3 class="modal-title" id="myModalLabel">为Baby添加日记吧</h3></div>
+                <div class="modal-body">
+                    <div id="photo_error" class="alert alert-danger hide error_message"><i id="photo_error_msg"
+                                                                                           class="icon icon-delete"></i>
+                        <em></em></div>
+                    <form action="https://duanyugit.github.io/interview/publish/ajax/publish_question/" method="post"
+                          id="quick_publish" onsubmit="return false">
+                        <div><textarea maxlength="50" class="form-control" placeholder="日记标题" rows="1"
+                                       name="question_content" id="photo_title"
+                                       onkeydown="if (event.keyCode == 13) { return false; }"></textarea></div>
+                        <textarea name="question_detail" id="photo_urls" class="form-control" rows="4"
+                                  placeholder="日记内容"></textarea>
+                        <div><textarea maxlength="50" onkeyup="textarea();" class="form-control"
+                                       placeholder="查看价格（单位：nas）" rows="1" name="question_content" id="photo_price"
+                                       onkeydown="if (event.keyCode == 13) { return false; }"></textarea></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><span class="pull-right"><a data-dismiss="modal" aria-hidden="true"
+                                                                      class="text-color-999">取消</a><button
+                        class="btn btn-success" onclick="post();">提交</button></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="zhuanModal" tabindex="-1" role="dialog" aria-labelledby="zhuanModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="zhuanModaltitle"></h4>
+            </div>
+            <div class="modal-body">
+                <p class="zhuan"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 创建求助 模态框（Modal） -->
+<div class="modal fade" id="init_modal" tabindex="-1" role="dialog" aria-labelledby="initModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="initModalLabel">
+                    为宝宝起个名字吧
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="tips_error" class="alert alert-danger hide error_message">
+                    <i id="tips_error_msg" class="icon icon-delete"></i>
+                    <em></em>
+                </div>
+                <form action="" method="post" ><!--onsubmit="return false"-->
+                    <div><textarea maxlength="50" class="form-control" placeholder="请输入宝宝名称" rows="1"
+                                   name="question_content" id="baby_title"
+                                   onkeydown="if (event.keyCode == 13) { return false; }"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                </button>
+                <button type="button" class="btn btn-primary" onclick="createBabyAccount();">
+                    添加
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+<script type="text/javascript">
+    function post_click() {
+        if (typeof(webExtensionWallet) === "undefined") {
+            alert('对不起，请先安装星云钱包插件！');
+            $('#photo_warning').show();
+            return;
+        } else {
+            if (userInfo === '\"\"' || userInfo.babyName === 'baby'){
+                $('#init_modal').modal('toggle')
+            } else {
+                AWS.dialog('publish', {'category_enable': '1', 'category_id': '0', 'topic_title': ''});
+            }
+            return false;
+        }
+    }
+
+    function isURL(str_url) {// 验证url
+//        var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+//            + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@
+//            + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+//            + "|" // 允许IP和DOMAIN（域名）
+//            + "([0-9a-z_!~*'()-]+\.)*" // 域名- www.
+//            + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\." // 二级域名
+//            + "[a-z]{2,6})" // first level domain- .com or .museum
+//            + "(:[0-9]{1,4})?" // 端口- :80
+//            + "((/?)|" // a slash isn't required if there is no file name
+//            + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+//        var re = new RegExp(strRegex);
+//        return re.test(str_url);
+        return str_url.indexOf('http') == 0
+    }
+
+    function textarea() {
+        $('#photo_price').val($('#photo_price').val().replace(/[^0-9.]/g, ''));
+    }
+
+    function getTransactionReceipt(hash, cb) {
+        //查询交易结果
+        neb.api.getTransactionReceipt({hash: hash})
+            .then(function (resp) {
+                console.log(resp);
+                cb(resp)
+
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+        // $.post('https://mainnet.nebulas.io/v1/user/getTransactionReceipt', JSON.stringify({
+        //     "hash": hash
+        // }), function (resp) {
+        //     console.log(resp);
+        //     cb(resp)
+        // })
+    }
+
+    function regetTransactionReceipt(hash, cb) {
+        var task = setInterval(function () {
+            getTransactionReceipt(hash, function (resp) {
+//                console.log(resp)
+                var status = resp.status;
+                console.log('status:' + status)
+                if (status == 1 || status == 0) {
+                    clearInterval(task);
+                    cb(status);
+                }
+            })
+        }, 1000);
+    }
+
+    Date.prototype.Format = function (fmt) { //author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    function isInArray(arr, value) {
+        for (var i = 0; i < arr.length; i++) {
+            if (value === arr[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function getWallectInfo() {
+        window.postMessage({
+            "target": "contentscript",
+            "data": {},
+            "method": "getAccount",
+        }, "*");
+
+        window.addEventListener('message', function (e) {
+            if (e.data && e.data.data) {
+                if (e.data.data.account) {//这就是当前钱包中的地址
+                    console.log(e.data);
+                    var address = e.data.data.account;
+
+                    if (address && address.length != 0) {
+
+                        myAddress = address;
+                        console.log('my address:' + myAddress);
+                        getHotShares(true);
+                        getUserInfo();
+                    }
+
+                }
+            }
+        });
+    }
+
+    function photoNew() {
+        $('#photo_hot').removeClass('active');
+        $('#photo_my').removeClass('active');
+        $('#photo_new').addClass('active');
+        getHotShares(false);
+    }
+
+    function my() {
+        $('#photo_hot').removeClass('active');
+        $('#photo_new').removeClass('active');
+        $('#photo_my').addClass('active');
+        getMyDiary();
+    }
+
+    function photoHot() {
+        $('#photo_hot').addClass('active');
+        $('#photo_new').removeClass('active');
+        $('#photo_my').removeClass('active');
+        getHotShares(true);
+    }
+
+    $('#photo_search_input').keydown(function (e) {
+        if (e.keyCode == 13) {
+            search();
+        }
+    });
+
+    function search() {
+        var title = $('#photo_search_input').val();
+        title = title.trim();
+        if (title == '') {
+            return;
+        }
+        getHotShares(true, title);
+        $('#photo_search_input').val('');
+        $('#photo_new').removeClass('active');
+        $('#photo_hot').removeClass('active');
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    //测试合约地址
+    // var dappContactAddress = "n1v1N4xecSzyTaHSncTaDHiCUwhKFLdxML2";
+    //正式合约地址
+    var nebulas = require("nebulas"), Account = Account, neb = new nebulas.Neb();
+    // neb.setRequest(new nebulas.HttpRequest("https://testnet.nebulas.io"))
+    neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"))
+    var NebPay = require("nebpay");     //https://github.com/nebulasio/nebPay
+    var nebPay = new NebPay();
+
+
+    var wei = 1000000000000000000;
+
+    //临时合约地址
+    // var contractAddress = 'n1nrsqP6ZscYJtAjLRt3KMZTn94SYzfeq34';
+    // 正式合约地址
+    var contractAddress = 'n228q1HCiAuLU48ao4Acek82am1zF388PWJ';
+    //test
+    // var contractAddress = 'n1x7XtouFo5nUruneMJLJubGoBP8ga2sL7F';
+    //old sss
+    var myAddress = '';//当前钱包地址
+    //var avatarArr = [31,35,36,37,48,51,52,54];
+    var avatarArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    var avatar = getRandomArrayElements(avatarArr, 1)[0];
+    // var apiUrl = 'https://testnet.nebulas.io/v1/user/call';
+    var apiUrl = 'https://mainnet.nebulas.io/v1/user/call';
+
+    // var apiUrl = 'https://testnet.nebulas.io/v1/user/call';
+    function getRandomArrayElements(arr, count) {
+        var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+        while (i-- > min) {
+            index = Math.floor((i + 1) * Math.random());
+            temp = shuffled[index];
+            shuffled[index] = shuffled[i];
+            shuffled[i] = temp;
+        }
+        return shuffled.slice(min);
+    }
+
+
+    function setAvatar(avatarNum) {
+        $('#photo_avatar').attr('src', 'avatar/' + avatarNum + '.png');
+        $('#photo_avatar').css('visibility', 'visible');
+    }
+
+    function setWelcome(username) {
+        $('#user_welcome').text('欢迎您，'+username);
+    }
+
+    function post() {
+        $('#photo_error').addClass('hide');
+        var title = $('#photo_title').val();
+        console.log('title:' + title);
+        var imageUrls = $('#photo_urls').val();
+        console.log('image urls:' + imageUrls);
+        var price = $('#photo_price').val();
+        console.log('price:' + price);
+        if (title == '') {
+            $('#photo_error_msg').text('请先输入面试公司名字！');
+            $('#photo_error').removeClass('hide');
+            return;
+        }
+        if (title.length > 64) {
+            $('#photo_error_msg').text('面试公司名字不能超过64个字符！');
+            $('#photo_error').removeClass('hide');
+            return;
+        }
+        if (imageUrls == '') {
+            $('#photo_error_msg').text('面试内容不能为空');
+            $('#photo_error').removeClass('hide');
+            return;
+        }
+
+        if (price == '') {
+            $('#photo_error_msg').text('价格不能为空！');
+            $('#photo_error').removeClass('hide');
+            return;
+        }
+
+        price = parseFloat(price) * 1000000000000000000;
+
+        var to = contractAddress;
+        var value = "0";
+        var callFunction = "post"
+        var callArgs = [];
+        callArgs.push(title);
+//http://img.ivsky.com/img/tupian/pre/201801/05/xingkong-002.jpg
+//http://img.ivsky.com/img/tupian/pre/201801/05/xingkong-001.jpg
+//        var imagesUrl = ['http://t.cn/R1h7YDF'
+//            , 'http://f.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03777b0d1ad83f8794a4c22615.jpg'
+//            , 'http://f.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03777b0d1ad83f8794a4c22615.jpg'
+//            , 'http://f.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03777b0d1ad83f8794a4c22615.jpg'
+//            , 'http://f.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03777b0d1ad83f8794a4c22615.jpg'
+//            , 'http://f.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03777b0d1ad83f8794a4c22615.jpg'
+//            ,'http://d.hiphotos.baidu.com/image/pic/item/94cad1c8a786c9171cc12b9dc53d70cf3ac75757.jpg'];
+        callArgs.push(imageUrls);
+        callArgs.push(price);
+        callArgs.push(avatar);
+        nebPay.call(to, value, callFunction, JSON.stringify(callArgs), {
+            listener: function (resp) {
+                console.log("response of push: " + JSON.stringify(resp));
+                if (resp == 'Error: Transaction rejected by user') {
+                    alert('交易已取消！');
+                    return;
+                }
+                alert('交易已提交，预计10~15秒内完成交易，请耐心等待！')
+                $('#photo_modal').modal('hide');
+                var hash = resp.txhash;
+                regetTransactionReceipt(hash, function () {
+                    alert('交易已完成，请刷新页面查看最新内容！');
+                    location.reload();
+                })
+            }
+        });
+    }
+
+    function getUserInfo() {
+        $.post(apiUrl, JSON.stringify({
+            "from": contractAddress,
+            "to": contractAddress,
+            "value": "0",
+            "nonce": 1,
+            "gasPrice": "1000000",
+            "gasLimit": "200000",
+            "contract": {"function": "getUserInfo", "args": "[\"" + myAddress + "\"]"}
+        }), function (resp) {
+            console.log('avatar:' + JSON.stringify(resp))
+            userInfo = resp.result.result;
+            if (userInfo != '\"\"') {
+                userInfo = JSON.parse(userInfo);
+                setWelcome(userInfo.babyName);
+                // setAvatar(userInfo.avatar);
+                // $('#photo_avatar').attr('title', '收入：' + (userInfo.income / wei) + '\n消费：' + userInfo.spend / wei + '\n分享：' + userInfo.post + '\n好评：' + userInfo.good + '\n差评：' + userInfo.bad);
+            } else {
+                setWelcome(myAddress);
+
+                // setAvatar(avatar);
+                // $('#photo_avatar').attr('title', '收入：0\n消费：0\n分享：0\n好评：0\n差评：0');
+            }
+        }, 'json')
+    }
+
+    function getHotUsers() {
+        $.post(apiUrl, JSON.stringify({
+            "from": contractAddress,
+            "to": contractAddress,
+            "value": "0",
+            "nonce": 1,
+            "gasPrice": "1000000",
+            "gasLimit": "200000",
+            "contract": {"function": "getHotUsers", "args": "[0, 10]"}
+        }), function (resp) {
+            console.log('get hot users:' + JSON.stringify(resp))
+            var users = JSON.parse(resp.result.result);
+            $('#photo_hot_users').empty();
+            for (var i = 0; i < users.length; i++) {
+                var user = users[i];
+                console.log(user);
+                $('#photo_hot_users').append('<dl>\n' +
+                    '                                <dt class="pull-left aw-border-radius-5">\n' +
+                    '                                    <a href="#"><img title="' + '收入：' + user.income / wei + '\n消费：' + user.spend / wei + '\n分享：' + user.post + '\n好评：' + user.good + '\n差评：' + user.bad + '" \n' +
+                    '                                            src="' + 'avatar/' + user.avatar + '.png' + '"/></a>\n' +
+                    '                                </dt>\n' +
+                    '                                <dd class="pull-left">\n' +
+                    '                                    <a href="#"\n' +
+                    '                                       data-id="7704" class="aw-user-name"><span style="font-size: 10px;">' + user.address + '</span></a>\n' +
+                    '                                    <p class="signature"></p>\n' +
+                    '                                    <p><b>' + user.post + '</b> 个分享, <b>' + user.good + '</b> 个好评</p>\n' +
+                    '                                </dd>\n' +
+                    '                            </dl>')
+            }
+        }, 'json')
+    }
+
+    function getHotShares(isHot, keyword) {
+        var fun = 'getHotShares';
+        if (!isHot) {
+            fun = 'getNewShares';
+        }
+        var args = '[0, 50]';
+        if (keyword && keyword != '') {
+            fun = 'getSharesByKeyword';
+            args = '[\"' + keyword + '\", 0, 50]'
+        }
+        $.post(apiUrl, JSON.stringify({
+            "from": contractAddress,
+            "to": contractAddress,
+            "value": "0",
+            "nonce": 1,
+            "gasPrice": "1000000",
+            "gasLimit": "200000",
+            "contract": {"function": "" + fun + "", "args": args}
+        }), function (resp) {
+            console.log(JSON.stringify(resp))
+            var result = JSON.parse(resp.result.result);
+            $('#photo_list').empty();
+            console.log(result);
+            for (var i = 0; i < result.length; i++) {
+                var photo = result[i];
+                var btn = '付费查看';
+                var btn2 = '';
+                console.log('size:' + photo.buyers.length)
+                if (photo.from == myAddress) {
+                    btn = '免费查看';
+                }
+                for (var k = 0; k < photo.buyers.length; k++) {
+                    console.log(myAddress + ',' + photo.buyers[k] + ',' + photo.from)
+                    if (myAddress == photo.buyers[k].from) {
+                        btn = '免费查看';
+                        btn2 = '<a href="javascript:void(0);" onclick="bad(' + photo.id + ');" class="pull-right text-color-999" style="margin-left: 10px;"><i class="icon icon-disagree">差评</i></a>' +
+                            '<a href="javascript:void(0);" onclick="good(' + photo.id + ');" class="pull-right text-color-999" style="margin-left: 10px;"><i style="font-size: 12px;" class="icon icon-agree">好评</i></a>';
+                    }
+                }
+                var user = photo.user;
+                $('#photo_list').append('<div class="aw-item " data-topic-id="">\n' +
+                    '    <a class="aw-user-name hidden-xs" data-id="7578"\n' +
+                    '       href="#"><span style="font-size: 18px">'+user.babyName+'</span></a>\n' +
+                    '    <div class="aw-question-content">\n' +
+                    '        <h4>\n' +
+                    '            <a href="javascript:void(0);" onclick="pay_view(' + photo.id + ',\'' + photo.title + '\',' + photo.price + ',\'' + btn + '\');">' + photo.title + '</a>\n' +
+                    '        </h4>\n' +
+                    '            <span>' + photo.from + '</span>\n' +
+                    //                    '        <div class="pull-right hidden-xs contribute">\n' +
+                    //                    '            <span class="pull-right text-color-999">已购</span>\n' +
+                    //                    '            <a class="aw-user-name" data-id="4279"\n' +
+                    //                    '               href="#"><img\n' +
+                    //                    '                    src="#"\n' +
+                    //                    '                    alt=""/></a>\n' +
+                    //                    '        </div>\n' +
+                    btn2 +
+                    '<a href="javascript:void(0);" onclick="pay_view(' + photo.id + ',\'' + photo.title + '\',' + photo.price + ',\'' + btn + '\');" class="pull-right text-color-999">' + '<span class="glyphicon glyphicon-eye-open">' + btn + '</span>' + '</a>' +
+                    '        <p>\n' +
+                    '<span style="color: #6c6c6c">' + '价格：' + '</span><span style="color:#00ee22; font-size: 18px;">' + (parseInt(photo.price) / 1000000000000000000).toString() + '</span>' +
+                    '            <span style="margin-left: 5px;font-size: 16px" class="text-color-999">' + photo.buyers.length + ' 人查看 • ' + photo.good + ' 个好评 • ' + photo.bad + ' 个差评 • ' + new Date(photo.ts).Format('yyyy-MM-dd HH:mm') + '\t\t\t\t</span>\n' +
+                    '            <span class="text-color-999 related-topic hide"> •  来自相关话题</span>\n' +
+                    '        </p>\n' +
+                    '    </div>\n' +
+                    '</div>')
+            }
+        }, 'json')
+    }
+
+    function getMyDiary() {
+        var fun = 'getMyDiary';
+        var args = [];
+        if (myAddress && myAddress != '') {
+            fun = 'getMyDiary';
+            args = '[\"' + myAddress + '\", 0, 50]'
+        }else {
+            alert('请先登录后才能查看"我的"模块')
+            return ;
+        }
+        $.post(apiUrl, JSON.stringify({
+            "from": contractAddress,
+            "to": contractAddress,
+            "value": "0",
+            "nonce": 1,
+            "gasPrice": "1000000",
+            "gasLimit": "200000",
+            "contract": {"function": "" + fun + "", "args": args}
+        }), function (resp) {
+            console.log(JSON.stringify(resp))
+            var result = JSON.parse(resp.result.result);
+            $('#photo_list').empty();
+            console.log(result);
+            if (result.length == 0){
+                $('#photo_list').append('<div style="float: left;margin-top: 20px">暂无日记</div>')
+                return;
+            }
+            for (var i = 0; i < result.length; i++) {
+                var photo = result[i];
+                var btn = '付费查看';
+                var btn2 = '';
+                console.log('size:' + photo.buyers.length)
+                if (photo.from == myAddress) {
+                    btn = '免费查看';
+                }
+                for (var k = 0; k < photo.buyers.length; k++) {
+                    console.log(myAddress + ',' + photo.buyers[k] + ',' + photo.from)
+                    if (myAddress == photo.buyers[k].from) {
+                        btn = '免费查看';
+                        btn2 = '<a href="javascript:void(0);" onclick="bad(' + photo.id + ');" class="pull-right text-color-999" style="margin-left: 10px;"><i class="icon icon-disagree">差评</i></a>' +
+                            '<a href="javascript:void(0);" onclick="good(' + photo.id + ');" class="pull-right text-color-999" style="margin-left: 10px;"><i style="font-size: 12px;" class="icon icon-agree">好评</i></a>';
+                    }
+                }
+                var user = photo.user;
+                $('#photo_list').append('<div class="aw-item " data-topic-id="">\n' +
+                    '    <a class="aw-user-name hidden-xs" data-id="7578"\n' +
+                    '       href="#"><span style="font-size: 18px">'+user.babyName+'</span></a>\n' +
+                    '    <div class="aw-question-content">\n' +
+                    '        <h4>\n' +
+                    '            <a href="javascript:void(0);" onclick="pay_view(' + photo.id + ',\'' + photo.title + '\',' + photo.price + ',\'' + btn + '\');">' + photo.title + '</a>\n' +
+                    '        </h4>\n' +
+                    '            <span>' + photo.from + '</span>\n' +
+                    //                    '        <div class="pull-right hidden-xs contribute">\n' +
+                    //                    '            <span class="pull-right text-color-999">已购</span>\n' +
+                    //                    '            <a class="aw-user-name" data-id="4279"\n' +
+                    //                    '               href="#"><img\n' +
+                    //                    '                    src="#"\n' +
+                    //                    '                    alt=""/></a>\n' +
+                    //                    '        </div>\n' +
+                    btn2 +
+                    '<a href="javascript:void(0);" onclick="pay_view(' + photo.id + ',\'' + photo.title + '\',' + photo.price + ',\'' + btn + '\');" class="pull-right text-color-999">' + '<span class="glyphicon glyphicon-eye-open">' + btn + '</span>' + '</a>' +
+                    '        <p>\n' +
+                    '<span style="color: #6c6c6c">' + '价格：' + '</span><span style="color:#00ee22; font-size: 18px;">' + (parseInt(photo.price) / 1000000000000000000).toString() + '</span>' +
+                    '            <span style="margin-left: 5px;font-size: 16px" class="text-color-999">' + photo.buyers.length + ' 人查看 • ' + photo.good + ' 个好评 • ' + photo.bad + ' 个差评 • ' + new Date(photo.ts).Format('yyyy-MM-dd HH:mm') + '\t\t\t\t</span>\n' +
+                    '            <span class="text-color-999 related-topic hide"> •  来自相关话题</span>\n' +
+                    '        </p>\n' +
+                    '    </div>\n' +
+                    '</div>')
+            }
+        }, 'json')
+    }
+
+    var domMask = $('.mask'),
+        domPopLayer = $('.pop-layer');
+
+    domMask.click(function (e) {
+        e.preventDefault();
+        domMask.hide();
+        domPopLayer.hide();
+    });
+
+    function pay_view(id, title, price, btn) {
+        if (typeof(webExtensionWallet) === "undefined") {
+            alert('对不起，请先安装星云钱包插件！');
+            $('#photo_warning').show();
+            return;
+        }
+        console.log('btn:' + btn);
+        if (btn == '免费查看') {
+            $.post(apiUrl, JSON.stringify({
+                "from": contractAddress,
+                "to": contractAddress,
+                "value": "0",
+                "nonce": 1,
+                "gasPrice": "1000000",
+                "gasLimit": "200000",
+                "contract": {"function": "getMakeMoneyWay", "args": "[" + id + ",\"" + myAddress + "\"]"}
+            }), function (resp) {
+                console.log(JSON.stringify(resp))
+                var result = JSON.parse(resp.result.result);
+                console.log(result);
+                var modal = $('#zhuanModal');
+                modal.find('.modal-body .zhuan').html(result)
+                modal.find('.modal-title').html(title)
+                $('#zhuanModal').modal('show')
+            }, 'json')
+        } else {
+            price = parseInt(price) / 1000000000000000000
+            var r = confirm('您将支付' + price + "nas, 用于查看面试经过！")
+            if (r == false) {
+                return;
+            }
+            console.log('id:' + id + ', price:' + price);
+            var to = contractAddress;
+            var value = parseFloat(price);
+            console.log(value);
+            var callFunction = "buy"
+            var callArgs = [];
+            callArgs.push(id);
+            callArgs.push(avatar);
+            nebPay.call(to, value, callFunction, JSON.stringify(callArgs), {
+                listener: function (resp) {
+                    console.log("response of push: " + JSON.stringify(resp));
+                    if (resp == 'Error: Transaction rejected by user') {
+                        alert('交易已取消！');
+                        return;
+                    }
+                    alert('交易已提交，预计10~15秒内完成交易，请耐心等待！')
+                    $('#photo_modal').modal('hide');
+                    var hash = resp.txhash;
+                    regetTransactionReceipt(hash, function (status) {
+                        if (status == 1) {
+                            alert('交易已完成，请刷新页面查看最新内容！');
+                            location.reload();
+                        } else {
+                            alert('交易失败！');
+                        }
+                    })
+                }
+            });
+        }
+    }
+
+    function good(id) {
+        var to = contractAddress;
+        var value = '0';
+        var callFunction = "good"
+        var callArgs = [];
+        callArgs.push(id);
+        nebPay.call(to, value, callFunction, JSON.stringify(callArgs), {
+            listener: function (resp) {
+                console.log("response of push: " + JSON.stringify(resp));
+                if (resp == 'Error: Transaction rejected by user') {
+                    alert('交易已取消！');
+                    return;
+                }
+                alert('交易已提交，预计10~15秒内完成交易，请耐心等待！')
+                var hash = resp.txhash;
+                regetTransactionReceipt(hash, function (status) {
+                    if (status == 1) {
+                        alert('交易已完成，请刷新页面查看最新内容！');
+                        location.reload();
+                    } else {
+                        alert('交易失败！');
+                    }
+                })
+            }
+        });
+    }
+
+    function bad(id) {
+        var to = contractAddress;
+        var value = '0';
+        var callFunction = "bad"
+        var callArgs = [];
+        callArgs.push(id);
+        nebPay.call(to, value, callFunction, JSON.stringify(callArgs), {
+            listener: function (resp) {
+                console.log("response of push: " + JSON.stringify(resp));
+                if (resp == 'Error: Transaction rejected by user') {
+                    alert('交易已取消！');
+                    return;
+                }
+                alert('交易已提交，预计10~15秒内完成交易，请耐心等待！')
+                var hash = resp.txhash;
+                regetTransactionReceipt(hash, function (status) {
+                    if (status == 1) {
+                        alert('交易已完成，请刷新页面查看最新内容！');
+                        location.reload();
+                    } else {
+                        alert('交易失败！');
+                    }
+                })
+            }
+        });
+    }
+
+    window.onload = function () {
+        if (typeof(webExtensionWallet) === "undefined") {
+            $('#photo_warning').show();
+            getHotShares(true);
+        } else {
+            getWallectInfo();
+        }
+    }
+
+    // getHotUsers();
+
+
+    function createBabyAccount() {
+
+        // var babyTitle = $('baby_title').val();
+        var babyTitle = $('#baby_title').val();
+
+        if (babyTitle == '') {
+            $('#tips_error_msg').text('请先输入小宝宝姓名！');
+            $('#tips_error').removeClass('hide');
+            return;
+        }
+
+        var callArgs = [];
+        var from = contractAddress
+        var to = contractAddress
+        var value = "0";
+        var nonce = "1"
+        var gas_price = "1000000"
+        var gas_limit = "2000000"
+        var callFunction = "createBabyAccount";
+        // var callArgs = "[\"" + search_value + "\"]";
+        callArgs.push(babyTitle)
+        var contract = {
+            "function": callFunction,
+            "args": JSON.stringify(callArgs)
+        }
+        nebPay.call(to, value, callFunction, JSON.stringify(callArgs),  {
+            listener: function (resp) {
+                alert(JSON.stringify(resp))
+                console.log("response of push: " + JSON.stringify(resp));
+                if (resp == 'Error: Transaction rejected by user') {
+                    alert('交易已取消！');
+                    return;
+                }
+                alert('交易已提交，预计10~15秒内完成交易，请耐心等待！' + resp.txhash)
+                $('#init_modal').modal('hide');
+                var hash = resp.txhash;
+                regetTransactionReceipt(hash, function () {
+                    alert('交易已完成，请刷新页面查看最新内容！');
+                    location.reload();
+                })
+            }
+        })
+    }
+
+
+</script>
+<script type="application/javascript" src="./static/bootstrap.min.js"></script>
+<script type="application/javascript" src="./static/viewer.min.js"></script>
+
+
+</body>
+</html>
